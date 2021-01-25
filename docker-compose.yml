@@ -1,0 +1,23 @@
+version: '3.5'
+services:
+    database:
+        image: mysql
+        ports:
+            - "1010:3306"
+        environment:
+            - MYSQL_ROOT_PASSWORD=senhateste
+            - MYSQL_DATABASE=teste
+            - MYSQL_USER=pagbank
+            - MYSQL_PASSWORD=pagbank_test
+        # Where our data will be persisted
+        expose:
+        # Opens port  on the container
+            - '3306'
+        volumes:
+            - db-volume:/var/lib/mysql/
+            - ./teste_pagbank.sql:/docker-entrypoint-initdb.d/init.sql
+        restart: always
+        command: --default-authentication-plugin=mysql_native_password
+        tty: true
+volumes:
+    db-volume:
